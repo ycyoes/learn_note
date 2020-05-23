@@ -6,3 +6,5 @@
 
 // console.log(a);  ReferenceError: a is not defined.
 console.log(b);
+
+var a = [];
