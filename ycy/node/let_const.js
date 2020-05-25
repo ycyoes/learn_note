@@ -44,8 +44,25 @@ console.log(foo); // 输出undefined
 var foo = 2;
 
 // let 的情况
-console.log(bar); // 报错ReferenceError
-let bar = 2;
+// console.log(bar); // 报错ReferenceError
+// let bar = 2;
+
+console.log('先试用后声明变量，使用typeof会报错')
+typeof x; // ReferenceError
+// let x;
+
+// 上面代码中，变量x使用let命令声明，所以在声明之前，都属于x的“死区”，只要用到该变量就会报错。因此，typeof运行时就会抛出一个ReferenceError。
+// 作为比较，如果一个变量根本没有被声明，使用typeof反而不会报错。
+typeof undeclared_variable // "undefined"
+
+
+
+
+
+
+
+
+
 
 
 
