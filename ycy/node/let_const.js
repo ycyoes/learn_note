@@ -77,7 +77,40 @@ for (var i = 0; i < s.length; i++) {
 console.log(i); // 5
 // 变量i只用来控制循环，但是循环结束后，它并没有消失，泄露成了全局变量
 
+function f1() { console.log('I am outside!'); }
 
+(function () {
+    if (false) {
+        // 重复声明一次函数f
+        function f1() { console.log('I am inside!'); }
+    }
+    f1();
+}());
+// 上面代码在 ES5 中运行，会得到“I am inside!”，因为在if内声明的函数f会被提升到函数头部
+// ES6 就完全不一样了，理论上会得到“I am outside!”。因为块级作用域内声明的函数类似于let，对作用域之外没有影响。
+// 但是，如果你真的在 ES6 浏览器中运行一下上面的代码，是会报错的
+
+/**
+ * 如果改变了块级作用域内声明的函数的处理规则，显然会对老代码产生很大影响。为了减轻因此产生的不兼容问题，ES6 在附录 B里面规定，浏览器的实现可以不遵守上面的规定，有自己的行为方式。
+
+允许在块级作用域内声明函数。
+函数声明类似于var，即会提升到全局作用域或函数作用域的头部。
+同时，函数声明还会提升到所在的块级作用域的头部。
+注意，上面三条规则只对 ES6 的浏览器实现有效，其他环境的实现不用遵守，还是将块级作用域的函数声明当作let处理。
+
+根据这三条规则，浏览器的 ES6 环境中，块级作用域内声明的函数，行为类似于var声明的变量。上面的例子实际运行的代码如下。
+// 浏览器的 ES6 环境
+function f() { console.log('I am outside!'); }
+(function () {
+  var f = undefined;
+  if (false) {
+    function f() { console.log('I am inside!'); }
+  }
+
+  f();
+}());
+// Uncaught TypeError: f is not a function
+ */
 
 
 
