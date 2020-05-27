@@ -17,12 +17,36 @@ let {sin, cos} = Math;
 console.log(sin(30))
 
 const {log} = console;
-log('test')
+log('-----------test--------')
 
+let {foo1: baz1} = {foo1: 'aaa', bar: 'bbb'};
+console.log(foo);
+console.log(baz1);
 
+let obj = {
+    p: [
+        'Hello',
+        {y1: 'World'}
+    ]
+};
 
+let { p: [x1, {y1}]} = obj;
+console.log(x1);
+console.log(y1);
 
+// 嵌套赋值
+let obj1 = {};
+let arr1 = [];
+({foo: obj1.prop, bar: arr1[0]} = { foo: 123, bar: true});
+console.log(obj1);
+console.log(arr1);
 
+console.log('----------解构赋值时，如果等号右边是数值和布尔值，则会先转为对象-----------')
+let {toString: s} = 123;
+console.log(toString)
+console.log(s)
+console.log(s === Number.prototype.toString)
+console.log(Number.prototype.toString)
 
 
 
