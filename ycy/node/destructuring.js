@@ -87,7 +87,14 @@ let jsonData = {
 let {id, status, data: number} = jsonData;
 console.log(id, status, number);
 
+// 遍历 Map 结构
+const map = new Map();
+map.set('first', 'hello');
+map.set('second', 'world');
 
+for(let [key, value] of map) {
+    console.log(key + " is " + value);
+}
 
 
 
