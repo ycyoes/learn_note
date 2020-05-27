@@ -54,3 +54,20 @@ console.log(Number.prototype.toString)
 // console.log(x2);
 // console.log(y2)
 
+function move({x = 0, y = 0} = {}) {
+    return [x, y];
+  }
+  
+  let moveResult = move({x: 3, y: 8});
+  console.log(moveResult)
+  let moveResult1 = move({x: 3});
+  console.log(moveResult1)
+  let moveResult2 = move({});
+  console.log(moveResult2)
+  let moveResult3 = move();
+  console.log(moveResult3)
+
+//   undefined就会触发函数参数的默认值
+let arr3 = [1, undefined, 3];
+arr3.map((x = 'yes') => x);
+console.log(arr3.map((x = 'yes') => x));
