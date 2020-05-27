@@ -71,3 +71,24 @@ function move({x = 0, y = 0} = {}) {
 let arr3 = [1, undefined, 3];
 arr3.map((x = 'yes') => x);
 console.log(arr3.map((x = 'yes') => x));
+
+let x3 = 1;
+let y3 = 2;
+[x3, y3] = [y3, x3];
+console.log(x3 + ' ' + y3)
+
+let jsonData = {
+    id: 42,
+    status: "ok",
+    data: [867, 5309]
+};
+
+// 提取 JSON 数据
+let {id, status, data: number} = jsonData;
+console.log(id, status, number);
+
+
+
+
+
+
