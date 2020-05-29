@@ -24,7 +24,8 @@ for (let i of text) {
     console.log(i);
 }
 
-
+// 直接输入 U+2028 和 U+2029
+console.log('中' === '\u4e2d')
 
 
 
