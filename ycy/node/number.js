@@ -66,14 +66,46 @@ console.log(3**3)
 // 多个指数运算符连用时，是从最右边开始计算的
 console.log(2**3**2)
 
+let a = 1.5;
+a **= 2
+console.log(a)
 
+// BigInt 只用来表示整数，没有位数的限制，任何位数的整数都可以精确表示
+{
+    const a = 2172141653n;
+    const b = 15346349309n;
+    console.log(a * b)
+}
 
+// BigInt 与普通整数是两种值，它们之间并不相等
+console.log(42n === 42)
 
+console.log(typeof 13n)
 
+// BigInt 可以使用负号（-），但是不能使用正号（+），因为会与 asm.js 冲突。
+console.log(-42n)
+// console.log(+42n)
 
+// JavaScript 以前不能计算70的阶乘（即70!），因为超出了可以表示的精度。
+let p = 1n;
+for (let i = 1n; i <= 70n; i++) {
+  p *= i;
+}
+console.log(p); // 11978571...00000000n
 
+const max = 2n ** (64n - 1n) - 1n;
+console.log(max)
+console.log(BigInt.asIntN(64, max))
+// 9223372036854775807n
+console.log(BigInt.asIntN(64, max + 1n))
+// -9223372036854775808n
+console.log(BigInt.asUintN(64, max + 1n))
+// 9223372036854775808n
 
-
+let log = console.log;
+log('转换规则')
+// 转为字符串时后缀n会消失
+log(String(1n))
 
 
 
