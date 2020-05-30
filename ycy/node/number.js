@@ -44,7 +44,27 @@ console.log(9007199254740993 - 990)
 // 上面代码中，9007199254740993不是一个安全整数，但是Number.isSafeInteger会返回结果，显示计算结果是安全的。
 // 这是因为，这个数超出了精度范围，导致在计算机内部，以9007199254740992的形式储存
 
+// 下面的函数可以同时验证两个运算数和运算结果。
+function trusty (left, right, result) {
+    if (
+      Number.isSafeInteger(left) &&
+      Number.isSafeInteger(right) &&
+      Number.isSafeInteger(result)
+    ) {
+      return result;
+    }
+    throw new RangeError('Operation cannot be trusted!');
+  }
+  
+//   trusty(9007199254740993, 990, 9007199254740993 - 990)
+console.log(trusty(1,2,3))
 
+//指数运算符
+console.log(2**2)
+console.log(3**3)
+
+// 多个指数运算符连用时，是从最右边开始计算的
+console.log(2**3**2)
 
 
 
