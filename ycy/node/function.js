@@ -232,7 +232,7 @@ function foo8() {
     }, 100);
   }
   
-  foo9(2, 4, 6, 8)
+//   foo9(2, 4, 6, 8)
 
   function foo10() {
       log('args of arguments: ', arguments);
@@ -249,17 +249,72 @@ function foo8() {
 }
 foo11()
 
+//不适用箭头函数的场合
+//1. 定义对象的方法，且该方法内部包括this
+//2. 需要动态this的时候，也不应使用箭头函数
+
+function tailFactorial(n, total) {
+    if (n === 1) return total;
+    return tailFactorial(n - 1, n * total);
+  }
+  
+  function factorial(n) {
+    return tailFactorial(n, 1);
+  }
+  
+  log( factorial(5) )
+ // 120
+
+//  柯里化（currying），意思是将多参数的函数转换成单参数的形式
+
+function factorial(n, total = 1) {
+    if (n === 1) return total;
+    return factorial(n - 1, n * total);
+  }
+  
+  factorial(5) // 120
 
 
+// 严格模式
+/**
+ * ES6 的尾调用优化只在严格模式下开启，正常模式是无效的。
 
+这是因为在正常模式下，函数内部有两个变量，可以跟踪函数的调用栈。
 
+func.arguments：返回调用时函数的参数。
+func.caller：返回调用当前函数的那个函数。
+尾调用优化发生时，函数的调用栈会改写，因此上面两个变量就会失真。严格模式禁用这两个变量，所以尾调用模式仅在严格模式下生效。
+ */
 
+function restricted() {
+    // 'use strict';
+    restricted.caller;    // 报错
+    log(restricted.caller)
+    restricted.arguments; // 报错
+    log(restricted.arguments)
+  }
+  restricted();
 
+  function sum(x, y) {
+    if (y > 0) {
+      return sum(x + 1, y - 1);
+    } else {
+      return x;
+    }
+  }
+  
+//   log(sum(1, 100000))
 
-
-
-
-
+function trampoline(f) {
+    while (f && f instanceof Function) {
+      f = f();
+    }
+    return f;
+  }
+  /**
+   * 上面就是蹦床函数的一个实现，它接受一个函数f作为参数。只要f执行后返回一个函数，就继续执行。
+   * 注意，这里是返回一个函数，然后执行该函数，而不是函数里面调用函数，这样就避免了递归执行，从而就消除了调用栈过大的问题
+   */
 
 
 
