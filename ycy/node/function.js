@@ -97,13 +97,49 @@ log((function(...args) {}).length)
 log((function (a = 0, b, c) {}).length)
 log((function (a, b = 1, c) {}).length)
 
+//作用域
+var z = 1;
+function f4(z, y = z) {
+    console.log(y);
+}
+f4(2)
+// 上面代码中，参数y的默认值等于变量x。
+// 调用函数f时，参数形成一个单独的作用域。在这个作用域里面，默认值变量x指向第一个参数x，而不是全局变量x，所以输出是2。
 
+let foo2 = 'outer';
+function bar(func = () => foo2) {
+    let foo2 = 'inner';
+    log(func())
+}
+bar();
 
+var x1 = 1;
+function foo3(x1, y = function() { x1 = 2; }) {
+    var x1 = 3;
+    y();
+    log(x1);
+}
+foo3()
+log(x1)
 
+// 利用参数默认值，可以指定某一个参数不得省略，如果省略就抛出一个错误
+function throwIfMissing() {
+    throw new Error('Missing parameter');
+  }
 
+  function foo4(mustBeProvided = throwIfMissing()) {
+    log(mustBeProvided)
+    return mustBeProvided;
+  }
+  
+  foo4('test')
 
+//   另外，可以将参数默认值设为undefined，表明这个参数是可以省略的
+function foo5(optional = undefined) { 
+    log(optional)
+ }
 
-
+foo5(1)
 
 
 
