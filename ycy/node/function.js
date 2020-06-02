@@ -183,11 +183,80 @@ function foo7() {
     }, 100);
 }
 var id = 21;
-foo7.call({id: 42})
+// foo7.call({id: 42})
 
 // 上面代码中，setTimeout的参数是一个箭头函数，这个箭头函数的定义生效是在foo函数生成时，而它的真正执行要等到 100 毫秒后。
 // 如果是普通函数，执行时this应该指向全局对象window，这时应该输出21。
 // 但是，箭头函数导致this总是指向函数定义生效时所在的对象（本例是{id: 42}），所以输出的是42。
+
+function Timer(){
+    this.s1 = 0;
+    this.s2 = 0;
+    //箭头函数
+    setInterval(() => this.s1++, 1000);
+    //普通函数
+    setInterval(function() {
+        this.s2++;
+    }, 1000);
+}
+// var timer = new Timer();
+// setTimeout(() => log('s1: ', timer.s1), 3100);
+// setTimeout(() => log('s2: ', timer.s2), 3100);
+
+// 上面代码中，Timer函数内部设置了两个定时器，分别使用了箭头函数和普通函数。
+// 前者的this绑定定义时所在的作用域（即Timer函数），后者的this指向运行时所在的作用域（即全局对象）。
+// 所以，3100 毫秒之后，timer.s1被更新了 3 次，而timer.s2一次都没更新。
+
+log('箭头函数嵌套')
+function foo8() {
+    return () => {
+      return () => {
+        return () => {
+          console.log('循环嵌套id:', this.id);
+        };
+      };
+    };
+  }
+  
+  var f = foo8.call({id: 1});
+  
+  var t1 = f.call({id: 2})()(); // id: 1
+  var t2 = f().call({id: 3})(); // id: 1
+  var t3 = f()().call({id: 4}); 
+
+  log(Array.prototype.shift === [].shift)
+
+  function foo9() {
+    setTimeout(() => {
+      console.log('args:', arguments);
+    }, 100);
+  }
+  
+  foo9(2, 4, 6, 8)
+
+  function foo10() {
+      log('args of arguments: ', arguments);
+  }
+  foo10()
+  foo10(1)
+
+  function foo11(){
+      log('-----instanceof--------')
+    console.log([] instanceof Array)
+    console.log(arguments instanceof Array)
+    if(arguments.push) arguments.push('test')
+    log('after push: ', arguments)
+}
+foo11()
+
+
+
+
+
+
+
+
+
 
 
 
