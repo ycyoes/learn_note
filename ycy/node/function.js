@@ -141,6 +141,56 @@ function foo5(optional = undefined) {
 
 foo5(1)
 
+// rest 参数
+function add(...values) {
+    let sum = 0;
+    for(var val of values) {
+        sum += val;
+    }
+    return sum;
+}
+log(add(2, 5, 3))
+
+const doSomething = (function() {
+    'use strict'
+    return function(value = 42) {
+        return value;
+    };
+}());
+log(doSomething())
+
+//name属性
+function foo6() {
+
+}
+log(foo6.name)
+
+
+log((new Function).name)
+
+// bind返回的函数，name属性值会加上bound前缀
+log(foo6.bind({}).name)
+log((function(){}).bind({}).name)
+
+//箭头函数
+let arr = [1,2,3].map(x => x * x)
+log(arr)
+
+// this对象的指向是可变的，但是在箭头函数中，它是固定的
+function foo7() {
+    setTimeout(() => {
+        log('id: ', this.id);
+    }, 100);
+}
+var id = 21;
+foo7.call({id: 42})
+
+// 上面代码中，setTimeout的参数是一个箭头函数，这个箭头函数的定义生效是在foo函数生成时，而它的真正执行要等到 100 毫秒后。
+// 如果是普通函数，执行时this应该指向全局对象window，这时应该输出21。
+// 但是，箭头函数导致this总是指向函数定义生效时所在的对象（本例是{id: 42}），所以输出的是42。
+
+
+
 
 
 
