@@ -84,11 +84,18 @@ function f3(x = 5, y = 6) {
 }
 f3(undefined, null)
 
+// 函数的 length 属性
+log((function (a) {}).length)
+log((function (a = 5) {}).length)
+log((function (a, b, c = 5) {}).length)
 
+// length属性的含义是，该函数预期传入的参数个数。
+// 某个参数指定默认值以后，预期传入的参数个数就不包括这个参数了。同理，后文的 rest 参数也不会计入length属性
+log((function(...args) {}).length)
 
-
-
-
+// 如果设置了默认值的参数不是尾参数，那么length属性也不再计入后面的参数了
+log((function (a = 0, b, c) {}).length)
+log((function (a, b = 1, c) {}).length)
 
 
 
