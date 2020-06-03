@@ -1,4 +1,5 @@
-let log = console.log;
+// let log = console.log;
+const {log} = console;
 
 // 一个容易忽略的地方是，参数默认值不是传值的，而是每次都重新计算默认值表达式的值。也就是说，参数默认值是惰性求值的
 let x = 99;
@@ -303,6 +304,7 @@ function restricted() {
     }
   }
   
+  //Maximum call stack size exceeded
 //   log(sum(1, 100000))
 
 function trampoline(f) {
@@ -316,7 +318,75 @@ function trampoline(f) {
    * 注意，这里是返回一个函数，然后执行该函数，而不是函数里面调用函数，这样就避免了递归执行，从而就消除了调用栈过大的问题
    */
 
+  function sum(x, y) {
+    if (y > 0) {
+      return sum.bind(null, x + 1, y - 1);
+    } else {
+      return x;
+    }
+  }
+  log(trampoline(sum(1, 100000)))
 
+//   蹦床函数并不是真正的尾递归优化，下面的实现才是。
+function tco(f) {
+    var value;
+    var active = false;
+    var accumulated = [];
+  
+    return function accumulator() {
+      accumulated.push(arguments);
+      if (!active) {
+        active = true;
+        while (accumulated.length) {
+          value = f.apply(this, accumulated.shift());
+        }
+        active = false;
+        return value;
+      }
+    };
+  }
+  
+  var sum = tco(function(x, y) {
+    if (y > 0) {
+      return sum(x + 1, y - 1)
+    }
+    else {
+      return x
+    }
+  });
+  
+  log(sum(1, 100000))
 
+  let a = 10
+  let b = 20
+  let n = function nnn(literals, ...params) {
+      log('literals: ', literals, ' params: ', params);
+      let output = "";
+      let index;
+      for(index = 0; index <params.length; index++) {
+          output += literals[index] + params[index];
+      }
+      output += literals[index];
+      return output;
+  }
+let output = n`haaaaaaa ${a} caaaaaaaa${a*b} sdasd ${b}`
+log(output)
+
+let m = function (literals) {
+    let result = '';
+    let i = 0;
+  
+    while (i < literals.length) {
+      result += literals[i++];
+      if (i < arguments.length) {
+        result += arguments[i];
+      }
+    }
+  
+    return result;
+  }
+
+let output2 = m`haaaaaaa ${a} caaaaaaaa${a*b} sdasd ${b}`
+log(output2)
 
 
