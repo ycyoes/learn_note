@@ -135,4 +135,9 @@ let arr5 = Array.from({length:2}, () => 'jack')
 log(arr5)
 // 上面代码中，Array.from的第一个参数指定了第二个参数运行的次数。这种特性可以让该方法的用法变得非常灵活
 
+// Array.of()
+let arr6 = Array.of(3, 11, 8)
+let arr7 = Array.of(3)
+let arr8 = Array.of(3).length
+log(arr6, arr7, arr8)
 
