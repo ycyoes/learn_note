@@ -130,3 +130,9 @@ function typesOf() {
 }
 
 log(typesOf(null, 'test', NaN))
+
+let arr5 = Array.from({length:2}, () => 'jack')
+log(arr5)
+// 上面代码中，Array.from的第一个参数指定了第二个参数运行的次数。这种特性可以让该方法的用法变得非常灵活
+
+
