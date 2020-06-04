@@ -60,10 +60,52 @@ const [first2, ...rest2] = ["foo"];
 log(first2, rest2)
 
 // 如果将扩展运算符用于数组赋值，只能放在参数的最后一位，否则会报错。
-const [...butLast, last] = [1, 2, 3, 4, 5];
+// const [...butLast, last] = [1, 2, 3, 4, 5];
 // log(butLast)
 
+log([...'hello'])
 
+log('x\uD83D\uDE80y'.length)
+log([...'x\uD83D\uDE80y'].length)
+
+// 正确返回字符串长度的函数，可以像下面这样写
+function length(str) {
+    return [...str].length;
+  }
+log(length('x\uD83D\uDE80y'))
+
+let map = new Map([
+    [1, 'one'],
+    [2, 'two'],
+    [3, 'three'],
+  ]);
+
+let arr3 = [...map.keys()]
+log(arr3)
+
+const go = function*(){
+    yield 1;
+    yield 2;
+    yield 3;
+  };
+
+log([...go()])
+
+let arrayLike = {
+    '0': 'a',
+    '1': 'b',
+    '2': 'c',
+    length: 3
+};
+
+log(Array.from(arrayLike))
+
+log(Array.from('hello'))
+
+let namesSet = new Set(['a', 'b'])
+log(Array.from(namesSet))
+
+log(Array.from({length: 3}))
 
 
 
