@@ -114,5 +114,19 @@ const toArray = (() =>
 )();
 log(toArray('test'))
 
+Array.from(arrayLike, x => x * x);
+// 等同于
+Array.from(arrayLike).map(x => x * x);
+let arr = Array.from([1, 2, 3], (x) => x * x);
+log(arr)
 
+// 下面的例子将数组中布尔值为false的成员转为0
+let arr4 = Array.from([1, , 2, , 3], (x) => x || 0)
+log(arr4)
 
+// 返回各种数据的类型
+function typesOf() {
+  return Array.from(arguments, values => typeof values);
+}
+
+log(typesOf(null, 'test', NaN))
