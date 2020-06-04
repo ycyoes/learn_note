@@ -107,8 +107,12 @@ log(Array.from(namesSet))
 
 log(Array.from({length: 3}))
 
-
-
+// 上面代码中，Array.from返回了一个具有三个成员的数组，每个位置的值都是undefined。扩展运算符转换不了这个对象
+// 对于还没有部署该方法的浏览器，可以用Array.prototype.slice方法替代。
+const toArray = (() =>
+  Array.from ? Array.from : obj => [].slice.call(obj)
+)();
+log(toArray('test'))
 
 
 
