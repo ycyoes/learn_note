@@ -143,3 +143,18 @@ log(Array.of())
 log(Array.of(undefined))
 log(Array.of(1))
 log(Array.of(1, 2))
+
+// 数组实例的copyWithin()
+log([1, 2, 3, 4, 5].copyWithin(0, 3))
+log([].copyWithin.call({length: 5, 3: 1}, 0, 3))
+
+// 将2号位到数组结束，复制到0号位
+let i32a = new Int32Array([1, 2, 3, 4, 5]);
+log(i32a.copyWithin(0, 2))
+log([1, 2, 3, 4, 5].copyWithin(0, 2))
+
+// 对于没有部署 TypedArray 的 copyWithin 方法的平台
+// 需要采用下面的写法
+log([].copyWithin.call(new Int32Array([1, 2, 3, 4, 5]), 0, 3, 4))
+
+
