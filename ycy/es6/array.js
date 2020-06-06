@@ -130,3 +130,16 @@ function typesOf() {
 }
 
 log(typesOf(null, 'test', NaN))
+
+// Array.of()
+log(Array.of(3, 11, 8))
+log(Array.of(3).length)
+// 这个方法的主要目的，是弥补数组构造函数Array()的不足。因为参数个数的不同，会导致Array()的行为有差异
+log(Array())
+log(Array(3))
+log(Array(3, 11, 8))
+// Array.of基本上可以用来替代Array()或new Array()，并且不存在由于参数不同而导致的重载。它的行为非常统一。
+log(Array.of())
+log(Array.of(undefined))
+log(Array.of(1))
+log(Array.of(1, 2))
