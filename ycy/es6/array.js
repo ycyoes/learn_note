@@ -248,3 +248,29 @@ log([,'a'].every(x => x==='a') )
 log([...['a',,'b']])
 log([,'a','b',,].copyWithin(2,0))
 log([,'a','b',,].length)
+
+const arr6 = [
+  'peach',
+  'straw',
+  'apple',
+  'spork'
+];
+
+const stableSorting = (s1, s2) => {
+  if (s1[0] < s2[0]) return -1;
+  return 1;
+};
+
+log(arr6.sort(stableSorting))
+
+const unstableSorting = (s1, s2) => {
+  if (s1[0] <= s2[0]) return -1;
+  return 1;
+};
+
+log(arr6.sort(unstableSorting))
+// 常见的排序算法之中，插入排序、合并排序、冒泡排序等都是稳定的，堆排序、快速排序等是不稳定的。
+// 不稳定排序的主要缺点是，多重排序时可能会产生问题。
+// 假设有一个姓和名的列表，要求按照“姓氏为主要关键字，名字为次要关键字”进行排序。
+// 开发者可能会先按名字排序，再按姓氏进行排序。
+// 如果排序算法是稳定的，这样就可以达到“先姓氏，后名字”的排序效果。如果是不稳定的，就不行。
