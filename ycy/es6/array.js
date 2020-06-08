@@ -176,9 +176,19 @@ log([NaN].indexOf(NaN))
 log([NaN].findIndex(y => Object.is(NaN, y)))
 // 上面代码中，indexOf方法无法识别数组的NaN成员，但是findIndex方法可以借助Object.is方法做到
 
+log(['a', 'b', 'c'].fill(7))
 
+// fill方法还可以接受第二个和第三个参数，用于指定填充的起始位置和结束位置
+log(['a', 'b', 'c'].fill(7, 1, 2))
 
+// 注意，如果填充的类型为对象，那么被赋值的是同一个内存地址的对象，而不是深拷贝对象
+let arr5 = new Array(3).fill({name: "Mike"});
+arr5[0].name = "Ben";
+log(arr5)
 
+for (let index of ['a', 'b'].keys()) {
+  console.log(index);
+}
 
 
 
