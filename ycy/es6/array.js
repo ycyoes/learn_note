@@ -157,4 +157,31 @@ log([1, 2, 3, 4, 5].copyWithin(0, 2))
 // 需要采用下面的写法
 log([].copyWithin.call(new Int32Array([1, 2, 3, 4, 5]), 0, 3, 4))
 
+log([1, 4, -5, 10].find((n) => n < 0))
+
+log([1, 5, 10, 15].findIndex(function(value, index, arr) {
+  return value > 9;
+}))
+
+function f(v){
+  return v > this.age;
+}
+
+let person = {name: 'John', age: 20};
+log([10,12, 26, 15].find(f, person))
+// 上面的代码中，find函数接收了第二个参数person对象，回调函数中的this对象指向person对象
+
+// 这两个方法都可以发现NaN，弥补了数组的indexOf方法的不足
+log([NaN].indexOf(NaN))
+log([NaN].findIndex(y => Object.is(NaN, y)))
+// 上面代码中，indexOf方法无法识别数组的NaN成员，但是findIndex方法可以借助Object.is方法做到
+
+
+
+
+
+
+
+
+
 
