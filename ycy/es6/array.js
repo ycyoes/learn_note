@@ -205,6 +205,16 @@ console.log(entries.next().value); // [0, 'a']
 console.log(entries.next().value); // [1, 'b']
 console.log(entries.next().value); // [2, 'c']
 
+log([1, 2, 3].includes(2))
+log([1, 2, NaN].includes(NaN) )
 
+const contains = (() =>
+  Array.prototype.includes
+    ? (arr, value) => arr.includes(value)
+    : (arr, value) => arr.some(el => el === value)
+)();
 
+log(contains(['foo', 'bar'], 'baz'))
+
+log([1, 2, [3, 4]].flat())
 
