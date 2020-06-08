@@ -235,5 +235,16 @@ log([2, 3, 4].flatMap((x) => [x, x * 2]))
 
 log([1, 2, 3, 4].flatMap(x => [[x * 2]]))
 
+log(Array(3))
+// 注意，空位不是undefined，一个位置的值等于undefined，依然是有值的。空位是没有任何值，in运算符可以说明这一点
+log(0 in [undefined, undefined, undefined] )
+log(0 in [, , ,])
 
+// [1].forEach((x,i) => console.log(i));
 
+log([,'a'].some(x => x !== 'a') )
+log([1,,2].reduce((x,y) => x+y) )
+log([,'a'].every(x => x==='a') )
+log([...['a',,'b']])
+log([,'a','b',,].copyWithin(2,0))
+log([,'a','b',,].length)
