@@ -131,13 +131,30 @@ function typesOf() {
 
 log(typesOf(null, 'test', NaN))
 
-let arr5 = Array.from({length:2}, () => 'jack')
-log(arr5)
-// 上面代码中，Array.from的第一个参数指定了第二个参数运行的次数。这种特性可以让该方法的用法变得非常灵活
-
 // Array.of()
-let arr6 = Array.of(3, 11, 8)
-let arr7 = Array.of(3)
-let arr8 = Array.of(3).length
-log(arr6, arr7, arr8)
+log(Array.of(3, 11, 8))
+log(Array.of(3).length)
+// 这个方法的主要目的，是弥补数组构造函数Array()的不足。因为参数个数的不同，会导致Array()的行为有差异
+log(Array())
+log(Array(3))
+log(Array(3, 11, 8))
+// Array.of基本上可以用来替代Array()或new Array()，并且不存在由于参数不同而导致的重载。它的行为非常统一。
+log(Array.of())
+log(Array.of(undefined))
+log(Array.of(1))
+log(Array.of(1, 2))
+
+// 数组实例的copyWithin()
+log([1, 2, 3, 4, 5].copyWithin(0, 3))
+log([].copyWithin.call({length: 5, 3: 1}, 0, 3))
+
+// 将2号位到数组结束，复制到0号位
+let i32a = new Int32Array([1, 2, 3, 4, 5]);
+log(i32a.copyWithin(0, 2))
+log([1, 2, 3, 4, 5].copyWithin(0, 2))
+
+// 对于没有部署 TypedArray 的 copyWithin 方法的平台
+// 需要采用下面的写法
+log([].copyWithin.call(new Int32Array([1, 2, 3, 4, 5]), 0, 3, 4))
+
 
