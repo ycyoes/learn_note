@@ -134,7 +134,53 @@ const person = {
       console.log('hello!');
     },
   };
-  
+log(person.sayName.name)  
+
+// 如果对象的方法使用了取值函数（getter）和存值函数（setter），则name属性不是在该方法上面，
+// 而是该方法的属性的描述对象的get和set属性上面，返回值是方法名前加上get和set
+const obj3 = {
+    get foo() {},
+    set foo(x) {}
+  };
+
+//   log(obj3.foo.name)
+  // TypeError: Cannot read property 'name' of undefined
+
+  const descriptor = Object.getOwnPropertyDescriptor(obj3, 'foo');
+log(descriptor.get.name)
+log(descriptor.set.name)
+// 有两种特殊情况：bind方法创造的函数，name属性返回bound加上原函数的名字；
+// Function构造函数创造的函数，name属性返回anonymous
+  log((new Function()).name)
+  var doSomething = function() {
+    // ...
+  };
+  log(doSomething.bind().name)
+//   如果对象的方法是一个 Symbol 值，那么name属性返回的是这个 Symbol 值的描述。
+const key1 = Symbol('description');
+const key2 = Symbol();
+let obj5 = {
+  [key1]() {},
+  [key2]() {},
+};
+log(obj5[key1].name)
+
+let obj6 = { foo: 123 };
+log(Object.getOwnPropertyDescriptor(obj6, 'foo'))
+
+log(Object.getOwnPropertyDescriptor(Object.prototype, 'toString').enumerable)
+log(Object.getOwnPropertyDescriptor([], 'length').enumerable)
+
+// ES6 规定，所有 Class 的原型的方法都是不可枚举的
+log(Object.getOwnPropertyDescriptor(class {foo() {}}.prototype, 'foo').enumerable)
+
+log(Reflect.ownKeys({ [Symbol()]:0, b:0, 10:0, 2:0, a:0 }))
+
+
+
+
+
+
 
 
 
