@@ -209,6 +209,86 @@ const obj8 = {
 Object.setPrototypeOf(obj8, proto1);
 log(obj8.foo())
 
+let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
+log(x, y, z)
+
+// 由于解构赋值要求等号右边是一个对象，所以如果等号右边是undefined或null，就会报错，因为它们无法转为对象
+// let { ...z } = null; // 运行时错误
+// let { ...z } = undefined; // 运行时错误
+
+// 解构赋值必须是最后一个参数，否则会报错。
+// let { ...x, y, z } = someObject; // 句法错误
+// let { x, ...y, ...z } = someObject; // 句法错误
+
+// 注意，解构赋值的拷贝是浅拷贝，即如果一个键的值是复合类型的值（数组、对象、函数）、
+// 那么解构赋值拷贝的是这个值的引用，而不是这个值的副本
+
+let obj9 = { a: { b: 1 } };
+let { ...x1 } = obj9;
+log(obj9.a.b)
+obj9.a.b = 2;
+log(x1.a.b)
+
+// 扩展运算符的解构赋值，不能复制继承自原型对象的属性。
+
+let o1 = { a: 1 };
+let o2 = { b: 2 };
+log(o2.__proto__ = o1)
+let { ...o3 } = o2;
+log(o3)
+log(o3.a)
+
+const o = Object.create({ x2: 1, y2: 2 });
+o.z2 = 3;
+
+log('o: ', o)
+let { x2, ...newObj } = o;
+let { y2, z2 } = newObj;
+log(x2, y2, z2)
+
+/**
+ * 上面代码中，变量x是单纯的解构赋值，所以可以读取对象o继承的属性；变量y和z是扩展运算符的解构赋值，
+ * 只能读取对象o自身的属性，所以变量z可以赋值成功，变量y取不到值。ES6 规定，变量声明语句之中，
+ * 如果使用解构赋值，扩展运算符后面必须是一个变量名，而不能是一个解构赋值表达式，
+ * 所以上面代码引入了中间变量newObj，如果写成下面这样会报错。
+ */
+
+// let { x3, ...{ y3, z3 } } = o;
+
+let z3 = { a: 3, b: 4 };
+let n = { ...z3 };
+log(n, z3)
+
+log({...{}, a: 1})
+log({...'hello'})
+
+// 写法一
+const clone1 = {
+  __proto__: Object.getPrototypeOf(obj),
+  ...obj
+};
+
+// 写法二
+const clone2 = Object.assign(
+  Object.create(Object.getPrototypeOf(obj)),
+  obj
+);
+
+// 写法三
+const clone3 = Object.create(
+  Object.getPrototypeOf(obj),
+  Object.getOwnPropertyDescriptors(obj)
+)
+
+let a2 = {
+  get x() {
+    log('扩展运算符的参数对象之中，如果有取值函数get，这个函数是会执行的')
+    // throw new Error('not throw yet');
+  }
+}
+
+let aWithXGetter = { ...a2 };
+log(aWithXGetter)
 
 
 
