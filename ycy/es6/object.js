@@ -290,7 +290,19 @@ let a2 = {
 let aWithXGetter = { ...a2 };
 log(aWithXGetter)
 
+/**
+ * 链判断运算符有三种用法。
 
+obj?.prop // 对象属性
+obj?.[expr] // 同上
+func?.(...args) // 函数或对象方法的调用
+ */
+
+// 下面是判断对象方法是否存在，如果存在就立即执行的例子。
+// iterator.return?.()
+
+// log(a?.b)
+log(a == null ? undefined : a.b)
 
 
 
