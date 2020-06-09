@@ -58,10 +58,38 @@ module.exports = {
   clear: clear
 };
 
+const cart = {
+    _wheels: 4,
+  
+    get wheels () {
+      return this._wheels;
+    },
+  
+    set wheels (value) {
+      if (value < this._wheels) {
+        throw new Error('数值太小了！');
+      }
+      this._wheels = value;
+    }
+  }
 
+  let user = {
+    name: 'test'
+  };
+  
+  let foo1 = {
+    bar: 'baz'
+  };
 
-
-
+  log(user, foo1)
+//   简写的对象方法不能用作构造函数，会报错。
+const obj = {
+    f() {
+      this.foo = 'bar';
+    }
+  };
+  
+//   new obj.f() // 报错
 
 
 
