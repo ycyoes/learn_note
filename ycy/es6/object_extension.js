@@ -162,9 +162,28 @@ log('__proto__属性（前后各两个下划线），用来读取或设置当前
 log(Object.getPrototypeOf({ __proto__: null }))
 
 let proto = {};
-let obj = { x: 10 };
-Object.setPrototypeOf(obj, proto);
+let obj5 = { x: 10 };
+Object.setPrototypeOf(obj5, proto);
 
 proto.y = 20;
 proto.z = 40;
+log(obj5.x)
+log(obj5.y)
+log(obj5.z)
+// 上面代码将proto对象设为obj对象的原型，所以从obj对象可以读取proto对象的属性
+// 如果第一个参数不是对象，会自动转为对象。但是由于返回的还是第一个参数，所以这个操作不会产生任何效果。
+
+log(Object.setPrototypeOf(1, {}) === 1)
+log(Object.setPrototypeOf('foo', {}) === 'foo')
+log(Object.setPrototypeOf(true, {}) === true)
+// 由于undefined和null无法转为对象，所以如果第一个参数是undefined或null，就会报错
+
+
+
+
+
+
+
+
+
 
