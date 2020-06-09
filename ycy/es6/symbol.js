@@ -44,6 +44,9 @@ log(sym1.toString())
 
 log(Boolean(sym))
 
+const sym2 = Symbol('foo');
+log(sym2.description)
+
 
 
 
