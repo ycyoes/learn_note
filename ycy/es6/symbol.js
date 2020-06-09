@@ -47,6 +47,39 @@ log(Boolean(sym))
 const sym2 = Symbol('foo');
 log(sym2.description)
 
+let a = {}
+let mySymbol = Symbol();
+a[mySymbol] = 'Hello';
+log(a)
+
+let a1 = {
+    [mySymbol]: 'Hello'
+}
+log(a1)
+
+let a2 = {};
+Object.defineProperty(a2, mySymbol, {value: 'Hello!'});
+log(a2, a2[mySymbol])
+// 注意，Symbol 值作为对象属性名时，不能用点运算符。
+
+// 在对象的内部，使用 Symbol 值定义属性时，Symbol 值必须放在方括号之中
+let s7 = Symbol();
+let obj1 = {
+    [s]: function (arg) { log(arg); return 'test';}
+  };
+log(obj1[s](123))
+
+const log1 = {};
+
+log1.levels = {
+  DEBUG: Symbol('debug'),
+  INFO: Symbol('info'),
+  WARN: Symbol('warn')
+};
+console.log(log1.levels.DEBUG, 'debug message');
+console.log(log1.levels.INFO, 'info message');
+
+
 
 
 
