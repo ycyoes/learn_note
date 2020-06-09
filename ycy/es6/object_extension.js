@@ -158,8 +158,13 @@ let mix = (object) => ({
   log(d.b);
   log(d.a);
 
+log('__proto__属性（前后各两个下划线），用来读取或设置当前对象的原型对象（prototype）')
+log(Object.getPrototypeOf({ __proto__: null }))
 
+let proto = {};
+let obj = { x: 10 };
+Object.setPrototypeOf(obj, proto);
 
-
-
+proto.y = 20;
+proto.z = 40;
 
