@@ -91,6 +91,50 @@ const obj = {
   
 //   new obj.f() // 报错
 
+let lastWord = 'last word';
+
+const a = {
+  'first word': 'hello',
+  [lastWord]: 'world'
+};
+
+log(a['first word'])
+log(a[lastWord])
+log(a['last word' ])
+
+let obj1 = {
+    ['h' + 'ello']() {
+      return 'hi';
+    }
+  };
+  log(obj1.hello())
+//   注意，属性名表达式与简洁表示法，不能同时使用，会报错
+
+// 报错
+const foo2 = 'bar';
+const bar2 = 'abc';
+// const baz = { [foo] };
+
+// 正确
+const foo3 = 'bar';
+const baz2 = { [foo]: 'abc'};
+
+// 注意，属性名表达式如果是一个对象，默认情况下会自动将对象转为字符串[object Object]，这一点要特别小心
+const keyA = {a: 1};
+const keyB = {b: 2};
+
+const myObject = {
+  [keyA]: 'valueA',
+  [keyB]: 'valueB'
+};
+log(myObject)
+
+const person = {
+    sayName() {
+      console.log('hello!');
+    },
+  };
+  
 
 
 
