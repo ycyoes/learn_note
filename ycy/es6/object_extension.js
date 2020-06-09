@@ -263,14 +263,14 @@ const map = new Map(Object.entries(obj13));
 log(map)
 
 // Generator函数的版本
-function* entries(obj) {
+function* entries1(obj) {
     for(let key of Object.keys(obj)) {
         yield [key, obj[key]];
     }
 }
 
 // 非Generator函数的版本
-function entries(obj) {
+function entries2(obj) {
     let arr = [];
     for(let key of Object.keys(obj)) {
         arr.push([key, obj[key]]);
@@ -278,12 +278,23 @@ function entries(obj) {
     return arr;
 }
 
+// Object.fromEntries()方法是Object.entries()的逆操作，用于将一个键值对数组转为对象。
+log(Object.fromEntries([
+    ['foo', 'bar11'],
+    ['baz', 42]
+  ]))
 
+  const entries3 = new Map([
+    ['foo', 'barts'],
+    ['baz', 42]
+  ]);
+  
+log(  Object.fromEntries(entries3))
 
+const map2 = new Map().set('foo', true).set('bar', false);
+log(Object.fromEntries(map2))
 
+// 该方法的一个用处是配合URLSearchParams对象，将查询字符串转为对象。
 
-
-
-
-
+log(Object.fromEntries(new URLSearchParams('foo=bar&baz=qux')))
 
