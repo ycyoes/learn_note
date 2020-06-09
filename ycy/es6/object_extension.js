@@ -178,6 +178,106 @@ log(Object.setPrototypeOf('foo', {}) === 'foo')
 log(Object.setPrototypeOf(true, {}) === true)
 // 由于undefined和null无法转为对象，所以如果第一个参数是undefined或null，就会报错
 
+function Rectangle() {
+    // ...
+  }
+  
+  const rec = new Rectangle();
+  log(Object.getPrototypeOf(rec) === Rectangle.prototype)
+log(Object.setPrototypeOf(rec, Object.prototype))
+log(Object.getPrototypeOf(rec) === Rectangle.prototype)
+
+log(Object.getPrototypeOf(1))
+log(Object.getPrototypeOf('foo'))
+log(Object.getPrototypeOf(true))
+
+var obj6 = { foo: 'bar', baz: 42 };
+log(Object.keys(obj6))
+
+let {keys, values, entries} = Object;
+let obj7 = { a: 1, b: 2, c: 3 };
+
+for (let key of keys(obj7)) {
+  console.log(key); // 'a', 'b', 'c'
+}
+
+for (let value of values(obj7)) {
+  console.log(value); // 1, 2, 3
+}
+
+for (let [key, value] of entries(obj7)) {
+  console.log([key, value]); // ['a', 1], ['b', 2], ['c', 3]
+}
+
+log(values(obj6))
+
+const obj8 = Object.create({}, {p: {value: 42}});
+log(obj8)
+log(values(obj8))
+
+const obj9 = Object.assign({}, {p: {value: 42}});
+log('obj9: ', obj9)
+log(values(obj9))
+/**
+ * 上面代码中，Object.create方法的第二个参数添加的对象属性（属性p），如果不显式声明，默认是不可遍历的，
+ * 因为p的属性描述对象的enumerable默认是false，Object.values不会返回这个属性。
+ * 只要把enumerable改成true，Object.values就会返回属性p的值
+ */
+
+const obj10 = Object.create({}, {p:
+    {
+      value: 42,
+      enumerable: true
+    }
+  });
+  log('obj10: ', obj10)
+log(  Object.values(obj10) )
+
+// Object.values会过滤属性名为 Symbol 值的属性。
+
+log(Object.values({ [Symbol()]: 123, foo: 'abc' }))
+
+log(Object.values('foo'))
+
+// 如果参数不是对象，Object.values会先将其转为对象。由于数值和布尔值的包装对象，都不会为实例添加非继承的属性。
+// 所以，Object.values会返回空数组。
+log(Object.values(42) )
+log(Object.values(true) )
+
+const obj11 = { foo: 'bar', baz: 42 };
+log(Object.entries(obj11))
+
+// 如果原对象的属性名是一个 Symbol 值，该属性会被忽略。
+
+log(Object.entries({ [Symbol()]: 123, foo: 'abc' }))
+
+let obj12 = { one: 1, two: 2 };
+for (let [k, v] of Object.entries(obj12)) {
+  console.log(
+    `${JSON.stringify(k)}: ${JSON.stringify(v)}`
+  );
+}
+
+const obj13 = { foo: 'bar', baz: 42 };
+const map = new Map(Object.entries(obj13));
+log(map)
+
+// Generator函数的版本
+function* entries(obj) {
+    for(let key of Object.keys(obj)) {
+        yield [key, obj[key]];
+    }
+}
+
+// 非Generator函数的版本
+function entries(obj) {
+    let arr = [];
+    for(let key of Object.keys(obj)) {
+        arr.push([key, obj[key]]);
+    }
+    return arr;
+}
+
 
 
 
