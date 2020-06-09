@@ -101,4 +101,65 @@ function processContent(options) {
   };
   log(processContent({ url: {port: 8000} }))
 
+  const obj4 = {
+    foo: 123,
+    get bar() { return 'abc' }
+  };
+log(Object.getOwnPropertyDescriptors(obj4))
+
+const source = {
+    set foo(value) {
+      console.log(value);
+    }
+  };
+  
+  const target1 = {};
+  Object.assign(target1, source);
+  
+  log(Object.getOwnPropertyDescriptor(target1, 'foo'))
+
+  log(`
+    上面代码中，source对象的foo属性的值是一个赋值函数，Object.assign方法将这个属性拷贝给target1对象，
+    结果该属性的值变成了undefined。这是因为Object.assign方法总是拷贝一个属性的值，
+    而不会拷贝它背后的赋值方法或取值方法。
+    这时，Object.getOwnPropertyDescriptors()方法配合Object.defineProperties()方法，就可以实现正确拷贝。
+  `)
+
+  const source5 = {
+    set foo(value) {
+      console.log(value);
+    }
+  };
+  
+  const target5 = {};
+  Object.defineProperties(target5, Object.getOwnPropertyDescriptors(source5));
+log(  Object.getOwnPropertyDescriptor(target5, 'foo'))
+
+// 上面代码中，两个对象合并的逻辑可以写成一个函数。
+
+const shallowMerge = (target, source) => Object.defineProperties(
+  target,
+  Object.getOwnPropertyDescriptors(source)
+);
+
+let mix = (object) => ({
+    with: (...mixins) => mixins.reduce(
+      (c, mixin) => Object.create(
+        c, Object.getOwnPropertyDescriptors(mixin)
+      ), object)
+  });
+  
+  // multiple mixins example
+  let a = {a: 'a'};
+  let b = {b: 'b'};
+  let c = {c: 'c'};
+  let d = mix(c).with(a, b);
+  log(d.c);
+  log(d.b);
+  log(d.a);
+
+
+
+
+
 
