@@ -79,20 +79,69 @@ log1.levels = {
 console.log(log1.levels.DEBUG, 'debug message');
 console.log(log1.levels.INFO, 'info message');
 
+log(Object.getOwnPropertyNames(a2))
+log(Object.getOwnPropertySymbols(a2))
 
+const obj3 = {};
+let a8 = Symbol('a');
+let b8 = Symbol('b');
 
+obj3[a8] = 'Hello';
+obj3[b8] = 'World';
 
+const objectSymbols = Object.getOwnPropertySymbols(obj3);
+log(objectSymbols)
+log(obj3)
+log(obj3[a8])
 
+const obj9 = {};
+const foo = Symbol('foo');
 
+obj9[foo] = 'bar';
 
+for (let i in obj9) {
+  console.log('i: ', i); // 无输出
+}
+log(Object.getOwnPropertyNames(obj9))
+log(Object.getOwnPropertySymbols(obj9))
 
+log(Reflect.ownKeys(a2))
 
+let obj10 = {
+    [Symbol('my_key')]: 1,
+    enum: 2,
+    nonEnum: 3
+  };
+  
+log(  Reflect.ownKeys(obj10))
 
+let size = Symbol('size');
 
+class Collection {
+  constructor() {
+    this[size] = 0;
+  }
 
+  add(item) {
+    this[this[size]] = item;
+    this[size]++;
+  }
 
+  static sizeOf(instance) {
+    return instance[size];
+  }
+}
 
-
+let x = new Collection();
+log(Collection.sizeOf(x))
+log(Object.keys(x))
+log(Object.getOwnPropertyNames(x) )
+log(Object.getOwnPropertySymbols(x))
+x.add('foo');
+log(Collection.sizeOf(x))
+log(Object.keys(x))
+log(Object.getOwnPropertyNames(x) )
+log(Object.getOwnPropertySymbols(x))
 
 
 
