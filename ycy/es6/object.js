@@ -176,9 +176,38 @@ log(Object.getOwnPropertyDescriptor(class {foo() {}}.prototype, 'foo').enumerabl
 
 log(Reflect.ownKeys({ [Symbol()]:0, b:0, 10:0, 2:0, a:0 }))
 
+const proto = {
+  foo: 'hello'
+};
 
+const obj7 = {
+  foo: 'world',
+  find() {
+    return super.foo;
+  }
+};
+Object.setPrototypeOf(obj7, proto);
+log(obj7.find())
 
+// 注意，super关键字表示原型对象时，只能用在对象的方法之中，用在其他地方都会报错
 
+log('------super-------this------')
+const proto1 = {
+  x: 'hello',
+  foo() {
+    console.log(this.x);
+  },
+};
+
+const obj8 = {
+  x: 'world',
+  foo() {
+    super.foo();
+  }
+}
+
+Object.setPrototypeOf(obj8, proto1);
+log(obj8.foo())
 
 
 
