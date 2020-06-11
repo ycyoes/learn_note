@@ -73,11 +73,15 @@ log(Symbol.iterator)
 log(Set.prototype[Symbol.iterator])
 log(Set.prototype.values)
 
+set5.forEach((value, key) => console.log(key + ' : ' + value))
 
+log([...set5])
 
+let arr2 = [3, 5, 2, 2, 5, 5, 4];
+log([...new Set(arr2)])
 
-
-
+let arr3 = [1, 2, 3, 4, 5, 6];
+log(arr3.filter(v => v % 2 === 0))
 
 
 
