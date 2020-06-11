@@ -83,14 +83,33 @@ log([...new Set(arr2)])
 let arr3 = [1, 2, 3, 4, 5, 6];
 log(arr3.filter(v => v % 2 === 0))
 
+let a1 = new Set([1, 2, 3]);
+let b1 = new Set([4, 3, 2]);
+// 并集
+let union = new Set([...a1, ...b1]);
+log(union)
 
+// 交集
+let intersect = new Set([...a1].filter(x => b1.has(x)));
+log(intersect)
 
+// （a 相对于 b 的）差集
+let difference = new Set([...a1].filter(x => !b1.has(x)));
+log(difference)
 
+/**
+ * 如果想在遍历操作中，同步改变原来的 Set 结构，目前没有直接的方法，但有两种变通方法。
+ * 一种是利用原 Set 结构映射出一个新的结构，然后赋值给原来的 Set 结构；
+ * 另一种是利用Array.from方法。
+ */
 
+// 方法一
+let set6 = new Set([1, 2, 3]);
+set6 = new Set([...set6].map(val => val * 2));
+// set的值是2, 4, 6
 
-
-
-
-
-
+// 方法二
+let set7 = new Set([1, 2, 3]);
+set7 = new Set(Array.from(set7, val => val * 2));
+log([...set7])
 
