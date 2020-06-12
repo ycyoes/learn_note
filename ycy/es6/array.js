@@ -157,4 +157,120 @@ log([1, 2, 3, 4, 5].copyWithin(0, 2))
 // 需要采用下面的写法
 log([].copyWithin.call(new Int32Array([1, 2, 3, 4, 5]), 0, 3, 4))
 
+log([1, 4, -5, 10].find((n) => n < 0))
 
+log([1, 5, 10, 15].findIndex(function(value, index, arr) {
+  return value > 9;
+}))
+
+function f(v){
+  return v > this.age;
+}
+
+let person = {name: 'John', age: 20};
+log([10,12, 26, 15].find(f, person))
+// 上面的代码中，find函数接收了第二个参数person对象，回调函数中的this对象指向person对象
+
+// 这两个方法都可以发现NaN，弥补了数组的indexOf方法的不足
+log([NaN].indexOf(NaN))
+log([NaN].findIndex(y => Object.is(NaN, y)))
+// 上面代码中，indexOf方法无法识别数组的NaN成员，但是findIndex方法可以借助Object.is方法做到
+
+log(['a', 'b', 'c'].fill(7))
+
+// fill方法还可以接受第二个和第三个参数，用于指定填充的起始位置和结束位置
+log(['a', 'b', 'c'].fill(7, 1, 2))
+
+// 注意，如果填充的类型为对象，那么被赋值的是同一个内存地址的对象，而不是深拷贝对象
+let arr5 = new Array(3).fill({name: "Mike"});
+arr5[0].name = "Ben";
+log(arr5)
+
+for (let index of ['a', 'b'].keys()) {
+  console.log(index);
+}
+
+for (let val of ['a', 'b'].values()) {
+  console.log(val);
+}
+
+for (let [index, elem] of ['a', 'b'].entries()) {
+  console.log(index, elem);
+}
+
+// 如果不使用for...of循环，可以手动调用遍历器对象的next方法，进行遍历
+let letter = ['a', 'b', 'c'];
+let entries = letter.entries();
+console.log(entries.next().value); // [0, 'a']
+console.log(entries.next().value); // [1, 'b']
+console.log(entries.next().value); // [2, 'c']
+
+log([1, 2, 3].includes(2))
+log([1, 2, NaN].includes(NaN) )
+
+const contains = (() =>
+  Array.prototype.includes
+    ? (arr, value) => arr.includes(value)
+    : (arr, value) => arr.some(el => el === value)
+)();
+
+log(contains(['foo', 'bar'], 'baz'))
+
+log([1, 2, [3, 4]].flat())
+
+// flat()默认只会“拉平”一层，如果想要“拉平”多层的嵌套数组，可以将flat()方法的参数写成一个整数，
+// 表示想要拉平的层数，默认为1
+log([1, 2, [3, [4, 5]]].flat())
+log([1, 2, [3, [4, 5]]].flat(2))
+
+// 如果不管有多少层嵌套，都要转成一维数组，可以用Infinity关键字作为参数
+log([1, [2, [3]]].flat(Infinity))
+
+// 如果原数组有空位，flat()方法会跳过空位
+log([1, 2, , 4, 5].flat())
+
+// flatMap()方法对原数组的每个成员执行一个函数（相当于执行Array.prototype.map()），
+// 然后对返回值组成的数组执行flat()方法。该方法返回一个新数组，不改变原数组
+log([2, 3, 4].flatMap((x) => [x, x * 2]))
+
+log([1, 2, 3, 4].flatMap(x => [[x * 2]]))
+
+log(Array(3))
+// 注意，空位不是undefined，一个位置的值等于undefined，依然是有值的。空位是没有任何值，in运算符可以说明这一点
+log(0 in [undefined, undefined, undefined] )
+log(0 in [, , ,])
+
+// [1].forEach((x,i) => console.log(i));
+
+log([,'a'].some(x => x !== 'a') )
+log([1,,2].reduce((x,y) => x+y) )
+log([,'a'].every(x => x==='a') )
+log([...['a',,'b']])
+log([,'a','b',,].copyWithin(2,0))
+log([,'a','b',,].length)
+
+const arr6 = [
+  'peach',
+  'straw',
+  'apple',
+  'spork'
+];
+
+const stableSorting = (s1, s2) => {
+  if (s1[0] < s2[0]) return -1;
+  return 1;
+};
+
+log(arr6.sort(stableSorting))
+
+const unstableSorting = (s1, s2) => {
+  if (s1[0] <= s2[0]) return -1;
+  return 1;
+};
+
+log(arr6.sort(unstableSorting))
+// 常见的排序算法之中，插入排序、合并排序、冒泡排序等都是稳定的，堆排序、快速排序等是不稳定的。
+// 不稳定排序的主要缺点是，多重排序时可能会产生问题。
+// 假设有一个姓和名的列表，要求按照“姓氏为主要关键字，名字为次要关键字”进行排序。
+// 开发者可能会先按名字排序，再按姓氏进行排序。
+// 如果排序算法是稳定的，这样就可以达到“先姓氏，后名字”的排序效果。如果是不稳定的，就不行。
