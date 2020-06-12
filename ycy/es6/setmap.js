@@ -132,10 +132,104 @@ log(ws)
 
 // 注意，是a数组的成员成为 WeakSet 的成员，而不是a数组本身。这意味着，数组的成员只能是对象。
 
+const map = new Map([
+  ['name', '张三'],
+  ['title', 'Author']
+]);
+log(map.size)
+log(map.has('name'))
+log(map.get('name'))
+log(map.get('title'))
+
+// 只有对同一个对象的引用，Map 结构才将其视为同一个键。这一点要非常小心。
+const map1 = new Map();
+map1.set(['a'], 555);
+log(map1.get(['a']) )
+
+// 上面代码的set和get方法，表面是针对同一个键，但实际上这是两个不同的数组实例，内存地址是不一样的，因此get方法无法读取该键，返回undefined。
+// Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键。这就解决了同名属性碰撞（clash）的问题，我们扩展别人的库的时候，如果使用对象作为键名，就不用担心自己的属性与原作者的属性同名。
 
 
+// 如果 Map 的键是一个简单类型的值（数字、字符串、布尔值），则只要两个值严格相等，Map 将其视为一个键，
+// 比如0和-0就是一个键，布尔值true和字符串true则是两个不同的键。另外，undefined和null也是两个不同的键。虽然NaN不严格相等于自身，
+// 但 Map 将其视为同一个键。
 
+map.set(-0, 123);
+log(map.get(+0))
 
+map.set(true, 1);
+map.set('true', 2);
+map.get(true) // 1
+
+map.set(undefined, 3);
+map.set(null, 4);
+map.get(undefined) // 3
+
+map.set(NaN, 123);
+map.get(NaN) // 123
+
+map.set(undefined, 'nah');
+log(map.get(undefined))
+
+let map2 = new Map()
+  .set(1, 'a')
+  .set(2, 'b')
+  .set(3, 'c');
+  log(map2.get(1))
+log('-----遍历-------')
+for(let key of map2.keys()) {
+  log(key)
+}
+
+for(let val of map2.values()) {
+  log(val)
+}
+
+for(let [k, v] of map2.entries()) {
+  log(k, v)
+}
+
+log('-----entries----')
+for(let item of map2.entries()) {
+  log(item[0], item[1])
+}
+
+log('-----for...of map-----')
+for(let [k, v] of map2) {
+  log(k, v)
+}
+
+log([...map2])
+log([...map2.keys()])
+log([...map2.values()])
+log([...map2.entries()])
+
+let map3 = new Map(
+  [...map2].filter(([k, v]) => k < 3)
+);
+log(map3)
+
+let map4 = new Map(Array.from([...map2]).filter(k => k < 3));
+log(map4)
+// log([1, 2, 3].filter(x => x < 3))
+let map5 = Array.from([...map2.keys()]).filter(k => k < 3)
+log(map5)
+
+map2.forEach(function(val, key, map) {
+  log("key: %s, value: %s", key, val)
+})
+
+const reporter = {
+  report: function(key, value) {
+    console.log("Key: %s, Value: %s", key, value);
+  }
+};
+
+// forEach方法还可以接受第二个参数，用来绑定this。
+map.forEach(function(value, key, map) {
+  this.report(key, value);
+}, reporter);
+// 上面代码中，forEach方法的回调函数的this，就指向reporter。
 
 
 
