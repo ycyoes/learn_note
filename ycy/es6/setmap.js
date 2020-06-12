@@ -231,5 +231,18 @@ map.forEach(function(value, key, map) {
 }, reporter);
 // 上面代码中，forEach方法的回调函数的this，就指向reporter。
 
+function strMapToObj(strMap) {
+  let obj = Object.create(null);
+  for (let [k,v] of strMap) {
+    obj[k] = v;
+  }
+  return obj;
+}
+
+const myMap = new Map()
+  .set('yes', true)
+  .set('no', false);
+strMapToObj(myMap)
+
 
 
