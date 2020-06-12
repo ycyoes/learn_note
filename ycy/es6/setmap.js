@@ -113,3 +113,29 @@ let set7 = new Set([1, 2, 3]);
 set7 = new Set(Array.from(set7, val => val * 2));
 log([...set7])
 
+let a2 = new Set([1, 2, 3]);
+let b2 = new Set([4, 3, 2]);
+//取交集
+let intersect1 = Array.from(a2).filter(x => b2.has(x))
+log(intersect1)
+//取差集
+let difference2 = Array.from(a2).filter(x => !b2.has(x))
+log(difference2)
+//取并集
+let union12 = Array.from(new Set([...a2, ...b2]))
+log(union12)
+
+const a3 = [[1, 2], [3, 4]];
+const ws = new WeakSet(a3);
+log(ws)
+// 上面代码中，a是一个数组，它有两个成员，也都是数组。将a作为 WeakSet 构造函数的参数，a的成员会自动成为 WeakSet 的成员。
+
+// 注意，是a数组的成员成为 WeakSet 的成员，而不是a数组本身。这意味着，数组的成员只能是对象。
+
+
+
+
+
+
+
+
