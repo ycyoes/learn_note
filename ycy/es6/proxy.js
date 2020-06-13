@@ -57,4 +57,81 @@ o2.p = 22;
 log(o2.p)
 log(Object.getOwnPropertyDescriptors(o2))
 
+log(new Object())
+log(Object.create({}))
+log(Object.create(null))
+console.dir(new Object())
+console.dir(Object.create(null))
+
+var handler = {
+    get: function(target, name) {
+      if (name === 'prototype') {
+        return Object.prototype;
+      }
+      return 'Hello, ' + name;
+    },
+  
+    apply: function(target, thisBinding, args) {
+      return args[0];
+    },
+  
+    construct: function(target, args) {
+      return {value: args[1]};
+    }
+  };
+  
+  var fproxy = new Proxy(function(x, y) {
+    return x + y;
+  }, handler);
+  
+  log(fproxy(1, 2) )
+  log(new fproxy(1, 2))
+  log(fproxy.prototype === Object.prototype)
+  log(fproxy.foo === "Hello, foo")
+log(Object.prototype)
+log(fproxy.prototype)
+
+var person = {
+    name: "张三"
+};
+
+var proxy1 = new Proxy(person, {
+    get: function(target, propKey) {
+        if(propKey in target) {
+            return target[propKey];
+        } else {
+            throw new ReferenceError("Prop name \"" + propKey + "\" does not exist")
+        }
+    }
+});
+log(proxy1.name)
+// log(proxy1.age)
+
+let proto = new Proxy({}, {
+    get(target, propertyKey, receiver) {
+      console.log('GET ' + propertyKey);
+      return target[propertyKey];
+    }
+  });
+
+let obj2 = Object.create(proto);
+log(obj2.foo)
+obj2.foo
+
+log(String(1))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
