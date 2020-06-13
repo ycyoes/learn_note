@@ -86,4 +86,112 @@ let handler2 = {
 obj4.a = 'a'
 
 
+const myObj = { foo: 'bar' };
+
+// 旧写法
+delete myObj.foo;
+
+// 新写法
+log(Reflect.deleteProperty(myObj, 'foo'))
+
+function Greeting(name) {
+    this.name = name;
+}
+// Reflect.construct 的写法
+const instance = Reflect.construct(Greeting, ['张三']);
+log(instance)
+const myObj2 = new Greeting();
+log(Reflect.getPrototypeOf(myObj2) === Greeting.prototype)
+log(Reflect.getPrototypeOf(myObj2))
+
+const ages = [11, 33, 12, 54, 18, 96];
+const youngest = Reflect.apply(Math.min, Math, ages);
+const oldest = Reflect.apply(Math.max, Math, ages);
+const type = Reflect.apply(Object.prototype.toString, youngest, []);
+log(youngest, oldest, type)
+
+function MyDate() {
+    /*…*/
+  }
+
+  Reflect.defineProperty(MyDate, 'now', {
+    value: () => Date.now()
+  });
+
+//   log(MyDate().now());
+log(Date.now())
+
+const p1 = new Proxy({}, {
+    defineProperty(target, prop, descriptor) {
+      console.log(descriptor);
+      return Reflect.defineProperty(target, prop, descriptor);
+    }
+  });
+  
+  p1.foo = 'bar';
+log(p1.foo)
+
+const myObject5 = {};
+
+// 旧写法
+Object.isExtensible(myObject5) // true
+
+// 新写法
+Reflect.isExtensible(myObject5) // true
+log(Reflect.isExtensible(myObject5))
+log(Object.isExtensible(1))
+// log(Reflect.isExtensible(1))
+
+// Reflect.ownKeys方法用于返回对象的所有属性，基本等同于Object.getOwnPropertyNames与Object.getOwnPropertySymbols之和。
+
+var myObject = {
+  foo: 1,
+  bar: 2,
+  [Symbol.for('baz')]: 3,
+  [Symbol.for('bing')]: 4,
+};
+
+// 旧写法
+Object.getOwnPropertyNames(myObject)
+// ['foo', 'bar']
+
+Object.getOwnPropertySymbols(myObject)
+//[Symbol(baz), Symbol(bing)]
+
+// 新写法
+Reflect.ownKeys(myObject)
+// ['foo', 'bar', Symbol(baz), Symbol(bing)]
+log(Reflect.ownKeys(myObject))
+
+log('-----使用 Proxy 实现观察者模式------')
+const queuedObservers = new Set();
+
+const observe = fn => queuedObservers.add(fn);
+const observable = obj => new Proxy(obj, {set});
+
+function set(target, key, value, receiver) {
+  const result = Reflect.set(target, key, value, receiver);
+  queuedObservers.forEach(observer => observer());
+  return result;
+}
+
+const person = observable({
+    name: '张三',
+    age: 20
+  });
+  
+  function print() {
+    console.log(`${person.name}, ${person.age}`)
+  }
+  observe(print);
+  person.name = '李四';
+//   observe(print);
+  person.name = 'test';
+
+
+
+
+
+
+
 
