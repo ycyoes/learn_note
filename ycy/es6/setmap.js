@@ -244,5 +244,58 @@ const myMap = new Map()
   .set('no', false);
 strMapToObj(myMap)
 
+let obj6 = {"a":1, "b":2};
+let map6 = new Map(Object.entries(obj6));
+log(map6)
+log(Object.entries(obj6))
+
+function objToStrMap(obj) {
+  let strMap = new Map();
+  for (let k of Object.keys(obj)) {
+    strMap.set(k, obj[k]);
+  }
+  return strMap;
+}
+
+log(objToStrMap({yes: true, no: false}))
+log(Object.keys(obj6), Object.values(obj6))
+
+function jsonToMap(jsonStr) {
+  return new Map(JSON.parse(jsonStr));
+}
+
+log(jsonToMap('[[true,7],[{"foo":3},["abc"]]]'))
+
+function jsonToStrMap(jsonStr) {
+  return objToStrMap(JSON.parse(jsonStr));
+}
+
+log(jsonToStrMap('{"yes": true, "no": false}'))
+log(JSON.parse('{"yes": true, "no": false}'))
+
+const _counter = new WeakMap();
+const _action = new WeakMap();
+
+class Countdown {
+  constructor(counter, action) {
+    _counter.set(this, counter);
+    _action.set(this, action);
+  }
+  dec() {
+    let counter = _counter.get(this);
+    if (counter < 1) return;
+    counter--;
+    _counter.set(this, counter);
+    if (counter === 0) {
+      _action.get(this)();
+    }
+  }
+}
+
+const c = new Countdown(2, () => console.log('DONE'));
+
+c.dec()
+c.dec()
+
 
 
