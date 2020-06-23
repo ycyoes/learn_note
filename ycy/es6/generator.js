@@ -330,6 +330,83 @@ function* foo2() {
   
   log1(g1());
 
+//   Generator 函数返回的遍历器对象，还有一个return方法，可以返回给定的值，并且终结遍历 Generator 函数
+
+function* gen3() {
+    yield 1;
+    yield 2;
+    yield 3;
+}
+
+let g4 = gen3();
+// log(g4.next())
+// log(g4.next())
+// log(g4.next())
+log(g4.next())
+log(g4.return())
+log(g4.return('test'))
+log(g4.next())
+
+function* inner() {
+    yield 'hello!';
+  }
+  
+  function* outer1() {
+    yield 'open';
+    yield inner();
+    yield 'close';
+  }
+  
+  var gen = outer1()
+  log(gen.next().value)
+  log(gen.next().value)
+  log(gen.next().value)
+
+  function* outer2() {
+    yield 'open'
+    yield* inner()
+    yield 'close'
+  }
+  
+  var gen = outer2()
+  log(gen.next().value)
+  log(gen.next().value)
+  log(gen.next().value)
+
+  let delegatedIterator = (function* () {
+    yield 'Hello!';
+    yield 'Bye!';
+  }());
+  
+  let delegatingIterator = (function* () {
+    yield 'Greetings!';
+    yield* delegatedIterator;
+    yield 'Ok, bye.';
+  }());
+  
+  for(let value of delegatingIterator) {
+    console.log(value);
+  }
+
+  function* gen5(){
+    yield* ["a", "b", "c"];
+  }
+  
+log(  gen5().next() )
+log(  gen5().next() )
+log(  gen5().next() )
+
+function* genFuncWithReturn() {
+    yield 'a';
+    yield 'b';
+    return 'The result';
+  }
+  function* logReturned(genObj) {
+    let result = yield* genObj;
+    console.log(result);
+  }
+  
+  log([...logReturned(genFuncWithReturn())])
 
 
 
