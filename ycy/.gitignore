@@ -1,0 +1,15 @@
+htmls/
+node_modules
+.vscode
+.idea
+npm-debug.log*
+./public/components
+.prepublish
+.prepublish*
+predist
+predist*
+.temp
+.tmp
+cig-vue-components.js
+dist
+public/components
