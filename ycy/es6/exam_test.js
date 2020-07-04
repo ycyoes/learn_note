@@ -89,7 +89,13 @@ log(+1 === -1)
 log(Object.is(NaN, NaN))
 log(Object.is(+0, -0))
 
+// let [a,b] = [[1, 2, 8],[1, 3, 4, 6]]
+log([...a,...b])
+let f3 = [...a,...b].sort()
+console.log(f3)
+log([...[1, 2, 8],...[1, 3, 4, 6]].sort())
 
+new Promise((resolve, reject) =>{ resolve('hello')}).then(b => console.log( b + ' world'))
 
 
 
