@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="cls" class="static"  v-bind:class="{ active: isActive, 'text-danger': hasError }"></div>
+    <div id="obj" v-bind:class="classObject"></div>
+    <div id="ae" v-bind:class="[activeClass, errorClass]"></div>
+
+    <script>
+        var vm2 = new Vue({
+            el: '#ae',
+            data: {
+                activeClass: 'active',
+                errorClass: 'text-danger'
+            }
+        })
+        var vm1 = new Vue({
+            el: '#obj',
+            data: {
+                // classObject: {
+                //     active: true,
+                //     'text-danger': true
+                // }
+                isActive: true,
+                error: null
+            },
+            computed: {
+                classObject: function () {
+                    return {
+                    active: this.isActive && !this.error,
+                    'text-danger': this.error && this.error.type === 'fatal'
+                    }
+                }
+                }
+        })
+
+       var vm = new Vue({
+            el: '#cls',
+            data: {
+                isActive: true,
+                hasError: false
+            }
+        })
+    </script>
+   
+  </body>
+ 
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
