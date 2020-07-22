@@ -274,3 +274,25 @@ log(arr6.sort(unstableSorting))
 // 假设有一个姓和名的列表，要求按照“姓氏为主要关键字，名字为次要关键字”进行排序。
 // 开发者可能会先按名字排序，再按姓氏进行排序。
 // 如果排序算法是稳定的，这样就可以达到“先姓氏，后名字”的排序效果。如果是不稳定的，就不行。
+
+var arr7 = [
+  {name: '马王街道'},
+  {name: '斗门街道'},
+  {name: '建章街道'},
+  {name: '上林街道'},
+]
+
+log(arr7.filter(x => 
+  x.name.includes('马王')
+))
+
+log('-----------arr7 filter---------')
+var arr8 = new Set(arr7.filter(x => {
+  x.name.includes('马王')
+  log(x.name.includes('马王'))
+}))
+log('-----------arr7 filter--2-------', [...arr8], [...arr7])
+
+log(arr7.filter(x => 
+  x.name.includes('马王')
+))
